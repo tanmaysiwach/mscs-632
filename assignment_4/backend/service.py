@@ -57,11 +57,6 @@ class Schedule:
             and len(self.schedule[day][time.upper()]) >= 2
         ):
             leftover_preferences[day] = time.upper()
-        if len(employee.shifts) == 0:
-            raise HTTPException(
-                status_code=400,
-                detail="Employee could not be added to the schedule, schedule is full",
-            )
         return employee, leftover_preferences
 
     def add_new_employee_shifts(self, employee: Employee):
@@ -90,6 +85,11 @@ class Schedule:
                         day, time, employee, leftover_preferences
                     )
 
+        if len(employee.shifts) == 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Employee could not be added to the schedule, schedule is full",
+            )
         return employee
 
 
